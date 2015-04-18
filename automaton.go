@@ -3,10 +3,32 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
 )
 
+func initArgs() (int, int, string) {
+	widthPtr := flag.Int("width", 80, "Line Width")
+	rowsPtr := flag.Int("rows", 80, "Rows to execute")
+	rulePtr := flag.String("rule", "30", "Which rule to use")
+	printRules := flag.Bool("rules", false, "Print rules")
+	flag.Parse()
+	if *printRules {
+		fmt.Print("Rules: ")
+		for key := range rules {
+			fmt.Print(key, " ")
+		}
+		fmt.Println()
+		os.Exit(0)
+	}
+	_, ok := rules[*rulePtr]
+	if !ok {
+		panic("Rule not found: " + *rulePtr)
+	}
+	return *widthPtr, *rowsPtr, *rulePtr
+}
+
 func main() {
-	width, rows := initArgs()
+	width, rows, rule := initArgs()
 	world := make([]bool, width)
 	for i := range world {
 		world[i] = false
@@ -15,18 +37,10 @@ func main() {
 	nextWorld := make([]bool, len(world))
 	printSlice(world)
 	for i := 0; i < rows; i++ {
-		processSlice(world, nextWorld)
+		processSlice(world, nextWorld, rule)
 		printSlice(nextWorld)
 		world, nextWorld = nextWorld, world // no need to copy...
 	}
-}
-
-func initArgs() (int, int) {
-	widthPtr := flag.Int("width", 80, "Line Width")
-	rowsPtr := flag.Int("rows", 80, "Rows to execute")
-	flag.Parse()
-	fmt.Println("width=", *widthPtr, "rows=", *rowsPtr)
-	return *widthPtr, *rowsPtr
 }
 
 func printSlice(slice []bool) {
@@ -40,8 +54,8 @@ func printSlice(slice []bool) {
 	fmt.Printf("\n")
 }
 
-func processSlice(src []bool, dest []bool) {
+func processSlice(src []bool, dest []bool, rule string) {
 	for i := 1; i < len(dest)-1; i++ { // all but first & last
-		dest[i] = rules["30"].processRule(src[i-1 : i+2]) // second is exclusive
+		dest[i] = rules[rule].processRule(src[i-1 : i+2]) // second is exclusive
 	}
 }
