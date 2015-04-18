@@ -1,21 +1,33 @@
 package automaton
 
-import "fmt"
+import (
+	"flag"
+	"fmt"
+)
+
+func initArgs() (int, int) {
+	widthPtr := flag.Int("width", 80, "Line Width")
+	rowsPtr := flag.Int("rows", 80, "Rows to execute")
+	flag.Parse()
+	fmt.Println("width=", widthPtr, "rows=", rowsPtr)
+	return *widthPtr, *rowsPtr
+}
 
 func main() {
-	world := make([]bool, 80)
+	width, rows := initArgs()
+	fmt.Println("Blah")
+	world := make([]bool, width)
 	for i := range world {
 		world[i] = false
 	}
 	world[int(len(world)/2)] = true
 	nextWorld := make([]bool, len(world))
 	printSlice(world)
-	for i := 0; i < 80; i++ {
+	for i := 0; i < rows; i++ {
 		processSlice(world, nextWorld)
 		printSlice(nextWorld)
-		copy(world, nextWorld)
+		world, nextWorld = nextWorld, world // no need to copy...
 	}
-
 }
 
 func printSlice(slice []bool) {
