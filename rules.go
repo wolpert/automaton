@@ -1,4 +1,4 @@
-package automaton
+package main
 
 type rule struct {
 	totals []int

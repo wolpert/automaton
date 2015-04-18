@@ -1,21 +1,12 @@
-package automaton
+package main
 
 import (
 	"flag"
 	"fmt"
 )
 
-func initArgs() (int, int) {
-	widthPtr := flag.Int("width", 80, "Line Width")
-	rowsPtr := flag.Int("rows", 80, "Rows to execute")
-	flag.Parse()
-	fmt.Println("width=", widthPtr, "rows=", rowsPtr)
-	return *widthPtr, *rowsPtr
-}
-
 func main() {
 	width, rows := initArgs()
-	fmt.Println("Blah")
 	world := make([]bool, width)
 	for i := range world {
 		world[i] = false
@@ -28,6 +19,14 @@ func main() {
 		printSlice(nextWorld)
 		world, nextWorld = nextWorld, world // no need to copy...
 	}
+}
+
+func initArgs() (int, int) {
+	widthPtr := flag.Int("width", 80, "Line Width")
+	rowsPtr := flag.Int("rows", 80, "Rows to execute")
+	flag.Parse()
+	fmt.Println("width=", *widthPtr, "rows=", *rowsPtr)
+	return *widthPtr, *rowsPtr
 }
 
 func printSlice(slice []bool) {

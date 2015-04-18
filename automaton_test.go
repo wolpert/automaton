@@ -1,4 +1,4 @@
-package automaton
+package main
 
 import "testing"
 
