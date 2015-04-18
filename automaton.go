@@ -1,4 +1,4 @@
-package main
+package automaton
 
 import "fmt"
 
@@ -43,18 +43,4 @@ func processRule(array []bool) bool {
 	default:
 		return false
 	}
-}
-
-func getValue(array []bool) int {
-	total := 0
-	if array[2] { // backwards, remember?
-		total += 1
-	}
-	if array[1] {
-		total += 2
-	}
-	if array[0] {
-		total += 4
-	}
-	return total
 }

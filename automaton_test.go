@@ -1,10 +1,10 @@
-package main
+package automaton
 
 import "testing"
 
 type testpair struct {
 	array    []bool
-	expected int
+	expected byte
 }
 
 var tests = []testpair{
