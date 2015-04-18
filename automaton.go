@@ -31,15 +31,14 @@ func printSlice(slice []bool) {
 
 func processSlice(src []bool, dest []bool) {
 	for i := 1; i < len(dest)-1; i++ { // all but first & last
-		value := processRule(src[i-1 : i+2]) // second is exclusive
-		dest[i] = value
+		dest[i] = processRule(src[i-1 : i+2]) // second is exclusive
 	}
 }
 
+// Rule 30
 func processRule(array []bool) bool {
-	total := getValue(array)
-	switch {
-	case total == 1, total == 2, total == 3, total == 4:
+	switch getValue(array) {
+	case 1, 2, 3, 4:
 		return true
 	default:
 		return false
