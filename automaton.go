@@ -31,16 +31,6 @@ func printSlice(slice []bool) {
 
 func processSlice(src []bool, dest []bool) {
 	for i := 1; i < len(dest)-1; i++ { // all but first & last
-		dest[i] = processRule(src[i-1 : i+2]) // second is exclusive
-	}
-}
-
-// Rule 30
-func processRule(array []bool) bool {
-	switch getValue(array) {
-	case 1, 2, 3, 4:
-		return true
-	default:
-		return false
+		dest[i] = rules["30"].processRule(src[i-1 : i+2]) // second is exclusive
 	}
 }

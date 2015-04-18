@@ -21,3 +21,13 @@ func getValue(array []bool) int {
 var rules = map[string]rule{
 	"30": {[]int{1, 2, 3, 4}},
 }
+
+func (r rule) processRule(array []bool) bool {
+	total := getValue(array)
+	for _, value := range r.totals {
+		if value == total {
+			return true
+		}
+	}
+	return false
+}

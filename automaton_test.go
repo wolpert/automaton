@@ -4,7 +4,7 @@ import "testing"
 
 type testpair struct {
 	array    []bool
-	expected byte
+	expected int
 }
 
 var tests = []testpair{
